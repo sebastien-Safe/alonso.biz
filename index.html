@@ -197,7 +197,6 @@
             margin-bottom: 0.5rem;
         }
 
-        /* Grille adaptative pour les cartes */
         .education-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -237,6 +236,7 @@
             margin-bottom: 0.7rem;
         }
 
+        /* Styles du Formulaire */
         .contact-form {
             display: flex;
             flex-direction: column;
@@ -269,8 +269,6 @@
             border-radius: 6px;
             cursor: pointer;
             transition: all var(--transition-speed);
-            position: relative;
-            overflow: hidden;
         }
 
         .contact-form button:hover {
@@ -428,24 +426,57 @@
             <p>Interventions régulières et mobilité sur plusieurs axes européens : France, Espagne, Italie, Suisse, Allemagne.</p>
         </section>
 
-       <!-- SECTION CONTACT SÉCURISÉE -->
+        <!-- SECTION CONTACT VIA EMAIL DIRECT -->
         <section id="contact" class="section">
             <h2>Contact</h2>
             <p style="text-align: center; margin-bottom: 1.5rem;">Un projet ou une opportunité ? Échangeons ensemble.</p>
             
-            <!-- L'action utilise ici impérativement le HTTPS -->
-            <form class="contact-form" action="mailto:sebastien@alonso.biz"POST">            
-                <input type="text" name="name" placeholder="Votre Nom" required>
-                <input type="email" name="_replyto" placeholder="Votre Email" required>
-                <textarea name="message" rows="5" placeholder="Votre Message" required></textarea>
+            <form class="contact-form" id="contact-form" onsubmit="sendEmail(event)">
+                <input type="text" id="form-name" placeholder="Votre Nom" required>
+                <input type="email" id="form-email" placeholder="Votre Email" required>
+                <textarea id="form-message" rows="5" placeholder="Votre Message" required></textarea>
                 <button type="submit">Envoyer</button>
             </form>
         </section>
+
     </div>
 
     <footer>
         <p>&copy; 2026 Michel Sébastien Alonso. Tous droits réservés.</p>
     </footer>
+
+    <!-- SCRIPT DE GÉNÉRATION D'EMAIL CORRIGÉ -->
+    <script>
+        function sendEmail(event) {
+            event.preventDefault(); // Empêche l'erreur 405 de GitHub
+            
+            // Récupération des valeurs entrées par le visiteur
+            const name = document.getElementById('form-name').value;
+            const email = document.getElementById('form-email').value;
+            const message = document.getElementById('form-message').value;
+            
+            // Configuration de l'adresse de réception
+            const recipient = "sebastien@alonso.biz";
+            
+            // Création d'un objet personnalisé et d'un corps de texte bien mis en page
+            const subject = encodeURIComponent("Contact Site Pro - " + name);
+            const body = encodeURIComponent(
+                "Bonjour Michel Sébastien,\n\n" +
+                "Vous avez reçu un nouveau message depuis votre site internet :\n\n" +
+                "--- MESSAGE ---\n" +
+                message + "\n" +
+                "---------------\n\n" +
+                "Pour lui répondre, utilisez son adresse e-mail : " + email + "\n\n" +
+                "Cordialement,\n" + name
+            );
+            
+            // Déclenchement de l'envoi sécurisé via le client mail du visiteur
+            window.location.href = "mailto:" + recipient + "?subject=" + subject + "&body=" + body;
+            
+            // Optionnel : Réinitialise le formulaire après clic
+            document.getElementById('contact-form').reset();
+        }
+    </script>
 
 </body>
 </html>
