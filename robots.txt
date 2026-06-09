@@ -1,0 +1,6 @@
+# Autoriser tous les moteurs de recherche à explorer le site
+User-agent: *
+Allow: /
+
+# Déclarer l'emplacement du fichier sitemap pour faciliter l'indexation
+Sitemap: https://www.alonso.biz/sitemap.xml
